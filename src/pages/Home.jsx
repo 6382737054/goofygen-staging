@@ -1,0 +1,204 @@
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useEvents } from "../context/EventsContext.jsx";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.9, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+export default function Home() {
+  const { events } = useEvents();
+  const upcoming = [...events]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(0, 3);
+
+  return (
+    <div>
+      {/* Viewport-wide ambient background */}
+      <div
+        aria-hidden
+        className="fixed inset-0 pointer-events-none z-0 overflow-hidden"
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.8, ease: "easeOut" }}
+          className="absolute -top-[20vh] -right-[20vw] w-[70vw] h-[70vw] max-w-[900px] max-h-[900px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(201,169,110,0.16) 0%, rgba(201,169,110,0) 70%)",
+          }}
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2.2, delay: 0.3 }}
+          className="absolute -bottom-[25vh] -left-[20vw] w-[60vw] h-[60vw] max-w-[760px] max-h-[760px] rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(10,9,7,0.06) 0%, rgba(10,9,7,0) 70%)",
+          }}
+        />
+      </div>
+
+      {/* All page content sits above the ambient layer */}
+      <div className="relative z-10">
+        {/* HERO */}
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-4 sm:pt-8 lg:pt-12 pb-20 sm:pb-28 lg:pb-40">
+          <div className="max-w-4xl">
+              <motion.div
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+                custom={0}
+                className="inline-flex items-center gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-ink-500 font-medium mb-8 sm:mb-10 lg:mb-12"
+              >
+                <span className="w-8 h-px bg-gold-400" />
+                <span>A community forum</span>
+                <span className="w-1 h-1 rounded-full bg-gold-400" />
+              </motion.div>
+
+              <motion.h1
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+                custom={1}
+                className="display text-ink-900 leading-[0.95] text-[clamp(2.5rem,8vw,7rem)] font-normal"
+              >
+                <span className="block">Conversations,</span>
+                <span className="block mt-1 text-gradient-gold font-light">
+                  gathered with&nbsp;care.
+                </span>
+              </motion.h1>
+
+              <motion.p
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+                custom={2}
+                className="mt-8 sm:mt-10 lg:mt-12 max-w-xl text-ink-600 text-base sm:text-[1.0625rem] leading-[1.75] sm:leading-[1.8] font-light"
+              >
+                A quiet corner of the internet for talks, meetups, and the
+                people who like to listen as much as they like to speak.
+              </motion.p>
+
+              <motion.div
+                variants={fadeUp}
+                initial="hidden"
+                animate="show"
+                custom={3}
+                className="mt-10 sm:mt-12 flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-5"
+              >
+                <Link
+                  to="/events"
+                  className="btn-primary w-full sm:w-auto justify-center"
+                >
+                  <span>Browse events</span>
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link
+                  to="/about"
+                  className="inline-flex items-center gap-3 px-2 sm:px-0 text-sm font-medium tracking-wide text-ink-700 hover:text-gold-600 transition-colors duration-300 group self-start sm:self-auto"
+                >
+                  <span className="link-underline">Read our story</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
+                </Link>
+              </motion.div>
+          </div>
+        </section>
+
+        {/* UPCOMING */}
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 sm:mb-14 lg:mb-16">
+            <div>
+              <p className="eyebrow mb-4 sm:mb-6">What's next</p>
+              <h2 className="display text-ink-900 text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.05]">
+                Upcoming gatherings
+              </h2>
+            </div>
+            <Link
+              to="/events"
+              className="inline-flex items-center gap-2 text-sm text-ink-700 hover:text-gold-500 transition-colors group self-start sm:self-auto"
+            >
+              View all
+              <span className="transition-transform group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+          </div>
+
+          {upcoming.length === 0 ? (
+            <p className="text-ink-500">Nothing scheduled — yet.</p>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              {upcoming.map((e, i) => (
+                <EventCard key={e.id} event={e} index={i} />
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* CLOSING LINE */}
+        <section className="max-w-4xl mx-auto px-5 sm:px-6 lg:px-10 py-20 sm:py-28 lg:py-32 text-center">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            className="display text-2xl sm:text-3xl lg:text-4xl font-light text-ink-700 leading-[1.4]"
+          >
+            The best conversations happen when no one's keeping score
+            <span className="block mt-4 text-gradient-gold">
+              — just listening.
+            </span>
+          </motion.p>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function EventCard({ event, index }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{
+        duration: 0.7,
+        delay: index * 0.1,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      <Link to={`/events/${event.id}`} className="card group block p-8 h-full">
+        <div className="flex items-center justify-between mb-6">
+          <span className="text-[11px] uppercase tracking-[0.25em] text-gold-500 font-medium">
+            {event.date}
+          </span>
+          <span className="w-9 h-9 rounded-full border border-ink-200 flex items-center justify-center text-ink-500 group-hover:bg-ink-900 group-hover:text-gold-300 group-hover:border-ink-900 transition-all duration-500">
+            →
+          </span>
+        </div>
+        <h3 className="display text-2xl font-normal text-ink-900 leading-[1.15]">
+          {event.title}
+        </h3>
+        <p className="mt-3 text-sm text-ink-500 leading-relaxed line-clamp-2">
+          {event.description}
+        </p>
+        <div className="mt-8 pt-6 border-t border-ink-100 flex items-center justify-between text-xs text-ink-500">
+          <span>{event.location}</span>
+          <span className="tabular-nums">
+            {event.speakers.length} · {event.audience.length}
+          </span>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
