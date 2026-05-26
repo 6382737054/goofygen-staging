@@ -50,7 +50,7 @@ export default function Home() {
       {/* All page content sits above the ambient layer */}
       <div className="relative z-10">
         {/* HERO */}
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-0 pb-20 sm:pb-28 lg:pb-40">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-0 pb-2 sm:pb-4 lg:pb-6">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
             <div className="lg:col-span-7">
               <motion.div
@@ -127,8 +127,67 @@ export default function Home() {
           </div>
         </section>
 
+        {/* CONTRIBUTE */}
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-4 sm:py-6 lg:py-8">
+          <div className="mb-10 sm:mb-14 lg:mb-16 text-center">
+            <p className="inline-flex items-center gap-3 text-[12px] sm:text-[13px] uppercase tracking-[0.3em] text-gold-600 font-semibold">
+              <span className="w-8 h-px bg-gold-400" />
+              How you can contribute
+              <span className="w-8 h-px bg-gold-400" />
+            </p>
+            <div className="hairline mt-6 max-w-xs mx-auto" />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-px bg-ink-100 border border-ink-100 rounded-2xl overflow-hidden">
+            {[
+              {
+                title: "Be a Speaker",
+                body: "Bring your expertise to a session or debate.",
+              },
+              {
+                title: "Be a Partner",
+                body: "Offer your space, institution, or network to host sessions, promote events, or connect us to communities that need it.",
+              },
+              {
+                title: "Join the Core Team",
+                body: "If you believe in this and want to help build it — as an organiser, researcher, designer, or coordinator — reach out. We are assembling the founding team.",
+              },
+              {
+                title: "Be a Messenger",
+                body: "Share this brief with one person who should be in the room. We grow through trust, not advertising.",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: 0.7,
+                  delay: i * 0.08,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="group bg-ink-50 hover:bg-white transition-colors duration-500 p-7 sm:p-9 lg:p-10 flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-3 mb-1">
+                  <span className="text-[10px] uppercase tracking-[0.3em] text-gold-500 font-medium tabular-nums">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="h-px flex-1 bg-gradient-to-r from-gold-300/60 to-transparent" />
+                </div>
+                <h3 className="display text-2xl sm:text-[1.75rem] font-normal text-ink-900 leading-tight">
+                  {item.title}
+                </h3>
+                <p className="text-ink-600 text-[15px] leading-[1.7] font-light">
+                  {item.body}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
         {/* UPCOMING */}
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 py-4 sm:py-6 lg:py-8">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-10 sm:mb-14 lg:mb-16">
             <div>
               <p className="eyebrow mb-4 sm:mb-6">What's next</p>
