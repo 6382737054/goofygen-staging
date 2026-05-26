@@ -94,7 +94,7 @@ body {
 
 /* Premium button */
 .btn-primary {
-  @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-ink-900 text-ink-50 font-medium text-sm tracking-wide overflow-hidden transition-all duration-500;
+  @apply relative inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-ink-400 text-ink-50 font-medium text-sm tracking-wide overflow-hidden transition-all duration-500;
 }
 .btn-primary::before {
   content: "";

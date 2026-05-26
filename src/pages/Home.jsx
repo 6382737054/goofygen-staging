@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useEvents } from "../context/EventsContext.jsx";
+import HeroCarousel from "../components/HeroCarousel.jsx";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -49,14 +50,15 @@ export default function Home() {
       {/* All page content sits above the ambient layer */}
       <div className="relative z-10">
         {/* HERO */}
-        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-4 sm:pt-8 lg:pt-12 pb-20 sm:pb-28 lg:pb-40">
-          <div className="max-w-4xl">
+        <section className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-10 pt-0 pb-20 sm:pb-28 lg:pb-40">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-start">
+            <div className="lg:col-span-7">
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
                 animate="show"
                 custom={0}
-                className="inline-flex items-center gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-ink-500 font-medium mb-8 sm:mb-10 lg:mb-12"
+                className="inline-flex items-center gap-3 text-[10px] sm:text-[11px] uppercase tracking-[0.28em] sm:tracking-[0.32em] text-ink-500 font-medium mb-6 sm:mb-8"
               >
                 <span className="w-8 h-px bg-gold-400" />
                 <span>A community forum</span>
@@ -68,7 +70,7 @@ export default function Home() {
                 initial="hidden"
                 animate="show"
                 custom={1}
-                className="display text-ink-900 leading-[0.95] text-[clamp(2.5rem,8vw,7rem)] font-normal"
+                className="display text-ink-900 leading-[0.95] text-[clamp(2.5rem,6.5vw,5.5rem)] font-normal"
               >
                 <span className="block">Conversations,</span>
                 <span className="block mt-1 text-gradient-gold font-light">
@@ -111,6 +113,17 @@ export default function Home() {
                   </span>
                 </Link>
               </motion.div>
+            </div>
+
+            {/* RIGHT: 3D rotating carousel */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="lg:col-span-5"
+            >
+              <HeroCarousel />
+            </motion.div>
           </div>
         </section>
 
